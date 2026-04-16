@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Saban Alam — Civil Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --orange: #FF5C00; --yellow: #FFD600; --teal: #00C2B2;
+    --navy: #0A1628; --cream: #F5F0E8; --white: #FFFFFF;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--navy); color: var(--cream); font-family: 'DM Sans', sans-serif; overflow-x: hidden; cursor: none; }
+
+  .cursor { width:12px;height:12px;background:var(--orange);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;mix-blend-mode:exclusion; }
+  .cursor-ring { width:36px;height:36px;border:2px solid var(--yellow);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;transition:width .2s,height .2s;mix-blend-mode:exclusion; }
+
+  nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:1.5rem 4rem;background:rgba(10,22,40,0.85);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,92,0,0.15); }
+  .nav-logo { font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.12em;color:var(--orange); }
+  .nav-links { display:flex;gap:2.5rem;list-style:none; }
+  .nav-links a { color:var(--cream);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;position:relative;transition:color .2s; }
+  .nav-links a::after { content:'';position:absolute;bottom:-4px;left:0;width:0;height:2px;background:var(--orange);transition:width .3s; }
+  .nav-links a:hover { color:var(--orange); }
+  .nav-links a:hover::after { width:100%; }
+
+  #hero { min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden; }
+  .hero-left { display:flex;flex-direction:column;justify-content:center;padding:10rem 4rem 6rem;position:relative;z-index:2; }
+  .hero-tag { display:inline-flex;align-items:center;gap:.6rem;font-size:.75rem;letter-spacing:.2em;text-transform:uppercase;color:var(--teal);font-weight:500;margin-bottom:1.5rem; }
+  .hero-tag::before { content:'';display:block;width:28px;height:2px;background:var(--teal); }
+  .hero-name { font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,9vw,9rem);line-height:.92;letter-spacing:.02em;color:var(--white);animation:slideUp .9s ease both; }
+  .hero-name span { color:var(--orange); }
+  .hero-title { font-family:'Playfair Display',serif;font-style:italic;font-size:1.4rem;color:var(--yellow);margin:1.2rem 0 2rem;animation:slideUp .9s .15s ease both; }
+  .hero-desc { font-size:1rem;line-height:1.75;color:rgba(245,240,232,0.65);max-width:420px;animation:slideUp .9s .3s ease both; }
+  .hero-ctas { display:flex;gap:1.2rem;margin-top:2.5rem;animation:slideUp .9s .45s ease both; }
+  .btn-primary { padding:.9rem 2.2rem;background:var(--orange);color:var(--white);font-weight:600;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;border:none;text-decoration:none;clip-path:polygon(0 0,calc(100% - 12px) 0,100% 12px,100% 100%,12px 100%,0 calc(100% - 12px));transition:background .2s,transform .2s;display:inline-block; }
+  .btn-primary:hover { background:#e04e00;transform:translateY(-2px); }
+  .btn-outline { padding:.9rem 2.2rem;background:transparent;color:var(--cream);font-weight:500;font-size:.9rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid rgba(245,240,232,0.3);text-decoration:none;transition:border-color .2s,color .2s,transform .2s;display:inline-block; }
+  .btn-outline:hover { border-color:var(--teal);color:var(--teal);transform:translateY(-2px); }
+
+  .hero-right { position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden; }
+  .blueprint-bg { position:absolute;inset:0;background:linear-gradient(rgba(0,194,178,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(0,194,178,.06) 1px,transparent 1px);background-size:40px 40px;animation:gridShift 20s linear infinite; }
+  @keyframes gridShift { 0%{background-position:0 0}100%{background-position:40px 40px} }
+  .hero-graphic { position:relative;z-index:2;width:380px;height:380px; }
+  .blueprint-circle { width:100%;height:100%;border:2px dashed rgba(0,194,178,.3);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:spin 30s linear infinite; }
+  .blueprint-inner { width:76%;height:76%;border:1px solid rgba(255,214,0,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;animation:spin 15s linear infinite reverse; }
+  .hero-icon-wrap { width:180px;height:180px;background:linear-gradient(135deg,var(--orange),#FF8C42);border-radius:24px;display:flex;align-items:center;justify-content:center;font-size:5rem;transform:rotate(15deg);box-shadow:0 0 60px rgba(255,92,0,.4),0 0 120px rgba(255,92,0,.15);animation:float 4s ease-in-out infinite; }
+  @keyframes spin { to{transform:rotate(360deg)} }
+  @keyframes float { 0%,100%{transform:rotate(15deg) translateY(0)}50%{transform:rotate(15deg) translateY(-16px)} }
+
+  .hero-stats { position:absolute;bottom:3rem;left:4rem;display:flex;gap:3rem;animation:slideUp .9s .6s ease both; }
+  .stat-item { display:flex;flex-direction:column; }
+  .stat-num { font-family:'Bebas Neue',sans-serif;font-size:2.8rem;line-height:1;color:var(--yellow); }
+  .stat-label { font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(245,240,232,.45);margin-top:.3rem; }
+  .stripe { position:absolute;top:-30%;right:-10%;width:3px;height:180%;background:linear-gradient(to bottom,transparent,var(--orange),transparent);transform:rotate(-15deg);opacity:.3; }
+
+  section { padding:6rem 4rem; }
+  .section-label { display:flex;align-items:center;gap:1rem;font-size:.72rem;letter-spacing:.25em;text-transform:uppercase;color:var(--orange);font-weight:500;margin-bottom:1rem; }
+  .section-label::after { content:'';flex:1;max-width:80px;height:1px;background:var(--orange);opacity:.4; }
+  .section-title { font-family:'Bebas Neue',sans-serif;font-size:clamp(2.8rem,5vw,4.5rem);letter-spacing:.04em;line-height:1;margin-bottom:1rem; }
+
+  #about { background:rgba(255,255,255,.02);display:grid;grid-template-columns:1fr 1fr;gap:6rem;align-items:center; }
+  .about-text p { font-size:1.05rem;line-height:1.85;color:rgba(245,240,232,.7);margin-bottom:1.2rem; }
+  .about-text p strong { color:var(--teal);font-weight:500; }
+  .skills-grid { display:grid;grid-template-columns:1fr 1fr;gap:1rem; }
+  .skill-card { background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.06);padding:1.4rem 1.6rem;border-radius:2px;transition:border-color .3s,transform .3s;position:relative;overflow:hidden; }
+  .skill-card::before { content:'';position:absolute;top:0;left:0;height:3px;width:0;background:var(--orange);transition:width .4s; }
+  .skill-card:hover { border-color:rgba(255,92,0,.3);transform:translateY(-3px); }
+  .skill-card:hover::before { width:100%; }
+  .skill-icon { font-size:1.8rem;margin-bottom:.6rem; }
+  .skill-name { font-size:.82rem;font-weight:600;letter-spacing:.06em;color:var(--cream);text-transform:uppercase; }
+
+  /* Projects */
+  #projects { background:var(--navy); }
+  .projects-grid { display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem; }
+  .project-card { background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.07);padding:2.2rem;position:relative;overflow:hidden;transition:transform .3s,border-color .3s;clip-path:polygon(0 0,calc(100% - 16px) 0,100% 16px,100% 100%,0 100%); }
+  .project-card:hover { transform:translateY(-6px);border-color:rgba(255,92,0,.4); }
+  .project-card::after { content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,92,0,.06),transparent);opacity:0;transition:opacity .3s; }
+  .project-card:hover::after { opacity:1; }
+  .project-num { font-family:'Bebas Neue',sans-serif;font-size:3.5rem;line-height:1;color:rgba(255,92,0,.15);margin-bottom:1rem; }
+  .project-title { font-size:1.15rem;font-weight:600;color:var(--white);margin-bottom:.8rem; }
+  .project-desc { font-size:.88rem;line-height:1.7;color:rgba(245,240,232,.55);margin-bottom:1.2rem; }
+  .project-tag { display:inline-block;padding:.3rem .8rem;background:rgba(0,194,178,.12);color:var(--teal);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(0,194,178,.2);border-radius:2px;margin-right:.5rem;margin-bottom:.4rem; }
+  .client-badge { display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .9rem;background:rgba(255,214,0,.08);color:var(--yellow);font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,214,0,.2);border-radius:2px;margin-bottom:.8rem; }
+
+  /* IREP Special Card */
+  .irep-card { grid-column: span 3; background:rgba(0,194,178,.04);border:1px solid rgba(0,194,178,.25);padding:0;overflow:hidden; clip-path:none; }
+  .irep-card:hover { transform:translateY(-6px);border-color:rgba(0,194,178,.5); }
+  .irep-badge { display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;background:linear-gradient(90deg,var(--teal),#00a896);color:var(--navy);font-size:.72rem;font-weight:700;letter-spacing:.15em;text-transform:uppercase;border-radius:2px;margin-bottom:1rem; }
+  .irep-inner { display:grid;grid-template-columns:1fr 1fr;gap:0; }
+  .irep-photos { display:grid;grid-template-columns:1fr 1fr;gap:0; }
+  .irep-photos img { width:100%;height:260px;object-fit:cover;display:block;transition:transform .4s; }
+  .irep-photos img:hover { transform:scale(1.03); }
+  .irep-content { padding:2.5rem; }
+  .irep-world-tag { display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,214,0,.12);border:1px solid rgba(255,214,0,.3);color:var(--yellow);font-size:.75rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:.4rem 1rem;border-radius:2px;margin-bottom:1.2rem; }
+  .irep-world-tag::before { content:'🏆'; }
+  .irep-title { font-size:1.5rem;font-weight:700;color:var(--white);margin-bottom:.5rem; }
+  .irep-sub { font-family:'Playfair Display',serif;font-style:italic;color:var(--teal);font-size:1rem;margin-bottom:1.2rem; }
+  .irep-desc { font-size:.9rem;line-height:1.8;color:rgba(245,240,232,.65);margin-bottom:1.5rem; }
+  .irep-stats { display:flex;gap:2rem;margin-bottom:1.5rem; }
+  .irep-stat-num { font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--teal); }
+  .irep-stat-label { font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,240,232,.4); }
+  .irep-link { display:inline-flex;align-items:center;gap:.6rem;color:var(--teal);font-size:.85rem;font-weight:500;text-decoration:none;border:1px solid rgba(0,194,178,.3);padding:.6rem 1.2rem;transition:background .2s,color .2s; }
+  .irep-link:hover { background:rgba(0,194,178,.1);color:var(--white); }
+  .irep-tags { display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem; }
+
+  /* Contact */
+  #contact { background:linear-gradient(135deg,rgba(255,92,0,.08),rgba(0,194,178,.05));border-top:1px solid rgba(255,92,0,.1);text-align:center; }
+  #contact p { font-size:1.1rem;color:rgba(245,240,232,.6);margin:1rem 0 2.5rem; }
+  .contact-links { display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;margin-bottom:3rem; }
+  .contact-chip { display:flex;align-items:center;gap:.7rem;padding:.9rem 1.8rem;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.04);color:var(--cream);text-decoration:none;font-size:.9rem;letter-spacing:.05em;transition:border-color .2s,color .2s,background .2s; }
+  .contact-chip:hover { border-color:var(--orange);color:var(--orange);background:rgba(255,92,0,.06); }
+
+  footer { padding:2rem 4rem;border-top:1px solid rgba(255,255,255,.06);display:flex;justify-content:space-between;align-items:center; }
+  footer p { font-size:.8rem;color:rgba(245,240,232,.3);letter-spacing:.08em; }
+  .footer-logo { font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.15em;color:rgba(255,92,0,.5); }
+
+  @keyframes slideUp { from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)} }
+  ::-webkit-scrollbar { width:4px; }
+  ::-webkit-scrollbar-track { background:var(--navy); }
+  ::-webkit-scrollbar-thumb { background:var(--orange);border-radius:2px; }
+
+  @media(max-width:900px){
+    nav{padding:1.2rem 1.5rem;} .nav-links{display:none;}
+    #hero{grid-template-columns:1fr;} .hero-right{display:none;}
+    .hero-left{padding:8rem 1.5rem 4rem;}
+    section{padding:4rem 1.5rem;}
+    #about{grid-template-columns:1fr;gap:3rem;}
+    .projects-grid{grid-template-columns:1fr;}
+    .irep-card{grid-column:span 1;}
+    .irep-inner{grid-template-columns:1fr;}
+    .irep-photos{grid-template-columns:1fr 1fr;}
+    .irep-photos img{height:180px;}
+    footer{flex-direction:column;gap:.8rem;text-align:center;}
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav>
+  <div class="nav-logo">SA</div>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Experience</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-left">
+    <div class="hero-tag">Civil Execution Engineer · 3+ Years Experience</div>
+    <h1 class="hero-name">Saban<br><span>Alam</span></h1>
+    <p class="hero-title">Hydro Power · Thermal Power · High-Rise Buildings</p>
+    <p class="hero-desc">Civil Execution Engineer with 3 years 8 months of experience in Hydro Power, Thermal Power, Irrigation, and High-Rise Building projects. Proficient in AutoCAD, BBS, site supervision, and project estimation.</p>
+    <div class="hero-ctas">
+      <a href="#projects" class="btn-primary">View Projects</a>
+      <a href="https://drive.google.com/file/d/1GFhuni-FvEgoPNrEGqsoad_xTfS0H2xI/view?usp=drivesdk" target="_blank" class="btn-outline">Download CV</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="blueprint-bg"></div>
+    <div class="stripe"></div>
+    <div class="hero-graphic">
+      <div class="blueprint-circle">
+        <div class="blueprint-inner">
+          <div class="hero-icon-wrap">🏗️</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat-item"><span class="stat-num">3.8+</span><span class="stat-label">Years Exp.</span></div>
+    <div class="stat-item"><span class="stat-num">4</span><span class="stat-label">Companies</span></div>
+    <div class="stat-item"><span class="stat-num">5+</span><span class="stat-label">Major Projects</span></div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-text">
+    <div class="section-label">About Me</div>
+    <h2 class="section-title">Engineering the World Around Us</h2>
+    <p>I'm <strong>Saban Alam</strong>, a Civil Execution Engineer with over <strong>3 years and 8 months</strong> of hands-on experience specializing in Hydro Power Projects, Thermal Power Plants, Irrigation Projects, and High-Rise Building Construction.</p>
+    <p>I excel in overseeing the full spectrum of construction activities — from <strong>foundation work and structural reinforcement</strong> to site management, BBS preparation, and cost estimation. I deliver projects on time and within budget.</p>
+    <p>Currently pursuing <strong>B.Tech in Civil Engineering (Final Year)</strong> from People's University, MP, alongside my professional career.</p>
+    <div style="margin-top:2rem; display:flex; gap:1rem; flex-wrap:wrap;">
+      <a href="#contact" class="btn-primary">Hire Me</a>
+      <a href="https://drive.google.com/file/d/1GFhuni-FvEgoPNrEGqsoad_xTfS0H2xI/view?usp=drivesdk" target="_blank" class="btn-outline">📄 Download CV</a>
+    </div>
+  </div>
+  <div class="skills-grid">
+    <div class="skill-card"><div class="skill-icon">📊</div><div class="skill-name">BBS Preparation</div></div>
+    <div class="skill-card"><div class="skill-icon">🔩</div><div class="skill-name">AutoCAD</div></div>
+    <div class="skill-card"><div class="skill-icon">🏗️</div><div class="skill-name">Site Supervision</div></div>
+    <div class="skill-card"><div class="skill-icon">📐</div><div class="skill-name">BOQ & Estimation</div></div>
+    <div class="skill-card"><div class="skill-icon">📋</div><div class="skill-name">DPR Reporting</div></div>
+    <div class="skill-card"><div class="skill-icon">👷</div><div class="skill-name">Site Management</div></div>
+    <div class="skill-card"><div class="skill-icon">🖥️</div><div class="skill-name">MS Excel / Revit</div></div>
+    <div class="skill-card"><div class="skill-icon">🤝</div><div class="skill-name">Team Leadership</div></div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="projects">
+  <div class="section-label">Work Experience</div>
+  <h2 class="section-title">Career Timeline</h2>
+  <div class="projects-grid">
+
+    <!-- IREP SPECIAL CARD - Full Width -->
+    <div class="project-card irep-card">
+      <div class="irep-inner">
+        <div class="irep-photos">
+          <img src="data:image/jpeg;base64,IREP_IMG1_PLACEHOLDER" alt="IREP PSP Night View — Greenko" id="irep-img1" style="object-position:center;">
+          <img src="data:image/jpeg;base64,IREP_IMG2_PLACEHOLDER" alt="IREP PSP Construction Site" id="irep-img2" style="object-position:center;">
+        </div>
+        <div class="irep-content">
+          <div class="irep-world-tag">World's First Project</div>
+          <div class="irep-badge">⚡ Hydro Power — PSP</div>
+          <div class="project-title irep-title">IREP — Integrated Renewable Energy Project</div>
+          <div class="irep-sub">Pinnapuram Pumped Storage Plant (PSP)</div>
+          <div class="client-badge">🏢 Client: GREENKO Group</div>
+          <p class="irep-desc">
+            World's <strong style="color:var(--teal)">first-ever</strong> integrated renewable energy pumped storage project — combining solar, wind, and hydro power into a single grid. Capacity: <strong style="color:var(--yellow)">5,180 MW</strong>. Worked on Power House construction, GIS Building, MIV Foundation, Generator Floor, and Turbine Floor civil works under Megha Engineering & Infrastructures Ltd.
+          </p>
+          <div class="irep-stats">
+            <div><div class="irep-stat-num">5180</div><div class="irep-stat-label">MW Capacity</div></div>
+            <div><div class="irep-stat-num">1st</div><div class="irep-stat-label">In The World</div></div>
+            <div><div class="irep-stat-num">2023</div><div class="irep-stat-label">– 2024</div></div>
+          </div>
+          <a href="https://share.google/je0LyC25bMqQuf6yh" target="_blank" class="irep-link">🔗 View Project — Greenko Group ↗</a>
+          <div class="irep-tags">
+            <span class="project-tag">Hydro Power</span>
+            <span class="project-tag">PSP</span>
+            <span class="project-tag">5180 MW</span>
+            <span class="project-tag">Irrigation</span>
+            <span class="project-tag">Megha Engg.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 1 -->
+    <div class="project-card">
+      <div class="project-num">04</div>
+      <div class="client-badge">🏢 Client: Adani Power</div>
+      <div class="project-title">Civil Execution Engineer</div>
+      <p class="project-desc"><strong style="color:var(--yellow)">Amara Raja Infra Pvt. Ltd.</strong><br>Feb 2026 – Present<br><br>3×800 MW Adani Thermal Power Project, Anuppur (MP). Foundation, column, shuttering, slab concreting & site estimation.</p>
+      <span class="project-tag">Thermal Power</span><span class="project-tag">Current</span>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="project-card">
+      <div class="project-num">03</div>
+      <div class="client-badge">🏢 Client: Titagarh Rail Systems</div>
+      <div class="project-title">Civil Execution Engineer</div>
+      <p clas
